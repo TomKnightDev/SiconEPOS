@@ -8,12 +8,13 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import ListItem from './ListItem';
+import List from './List';
 
 export default APITest = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-  const onPress = (itemCode) => alert(itemCode);
 
   useEffect(() => {
     fetch(
@@ -21,8 +22,12 @@ export default APITest = () => {
     )
       .then((response) => response.json())
       .then((json) => {
-        setData(json);
-        console.log(json);
+        //setData(json);
+        var items = [];
+        for (var i = 0; i < json.length; i++) {
+          items.push({'text': json[i]['ItemCode']});
+        }
+        setData(items);
       })
       .catch((error) => console.error(error))
       .finally(() => setLoading(false));
@@ -33,18 +38,20 @@ export default APITest = () => {
       {isLoading ? (
         <ActivityIndicator />
       ) : (
-        <FlatList style={styles.list}
-          numColumns={4}
-          data={data}
-          keyExtractor={({id}, index) => id}
-          renderItem={({item}) => (
-            <TouchableOpacity 
-            style={styles.item}
-            onPress={(item) => {Alert.alert(item.Quantity)}}>
-              <Text>{item.ItemCode}</Text>
-            </TouchableOpacity>
-          )}
-        />
+        <List columnCount={4} data={data}></List>
+        // <FlatList style={styles.list}
+        //   numColumns={4}
+        //   data={data}
+        //   keyExtractor={({SiWorksOrderLineID}, index) => SiWorksOrderLineID}
+        //   renderItem={({item}) => (
+        //     <ListItem text={item.ItemCode}></ListItem>
+        //     // <TouchableOpacity
+        //     // style={styles.item}
+        //     // onPress={(item) => {Alert.alert(item.Quantity)}}>
+        //     //   <Text style={styles.itemText}>{item.ItemCode}</Text>
+        //     // </TouchableOpacity>
+        //   )}
+        // />
       )}
     </View>
   );
@@ -52,21 +59,29 @@ export default APITest = () => {
 
 const styles = StyleSheet.create({
   item: {
-    fontSize: 20,
     flex: 1,
-    padding: 10,
+    // padding: 10,
     color: 'black',
     borderStyle: 'solid',
     borderWidth: 1,
-    width: 150,
+    width: 140,
     height: 100,
-    borderRadius: 10,    
+    borderRadius: 10,
     margin: 2,
-    backgroundColor: 'lightgreen'
+    backgroundColor: 'lightgreen',
+  },
+  itemText: {
+    textAlignVertical: 'center',
+    textAlign: 'center',
+    fontSize: 20,
+    margin: 1,
+    marginTop: 20,
   },
   list: {
-      flexWrap: 'wrap',
-      flexDirection: 'row',      
-      padding: 10,
-  }
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    padding: 10,
+    // borderRadius: 2,
+    // borderWidth: 2,
+  },
 });

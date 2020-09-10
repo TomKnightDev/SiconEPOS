@@ -14,6 +14,7 @@ import {
   View,
   Text,
   StatusBar,
+  Flexbox,
 } from 'react-native';
 
 import {
@@ -25,20 +26,36 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import APITest from './components/APITest';
 import ProductGroups from './components/ProductGroups';
+import MainLayout from './components/MainLayout';
 
 const App = () => {
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <Text style={styles.sectionTitle}>Sicon EPOS</Text>
+      <MainLayout></MainLayout>
+      {/* <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <Text style={styles.sectionTitle}>Sicon EPOS</Text>
-        <ScrollView        
-          contentInsetAdjustmentBehavior="automatic"
-          contentContainerStyle={styles.scrollView}>
+        <View style={styles.main}>
+          <ScrollView
+            flex={.5}
+            contentInsetAdjustmentBehavior="automatic"
+            contentContainerStyle={styles.scrollView}>
             <ProductGroups></ProductGroups>
+          </ScrollView>
+          <ScrollView
+            flex={4}
+            contentInsetAdjustmentBehavior="automatic"
+            contentContainerStyle={styles.scrollView}>
             <APITest></APITest>
-        </ScrollView>
-      </SafeAreaView>
+          </ScrollView>
+          <ScrollView
+            flex={.5}
+            contentInsetAdjustmentBehavior="automatic"
+            contentContainerStyle={styles.scrollView}>            
+          </ScrollView>
+        </View>
+      </SafeAreaView> */}
     </>
   );
 };
@@ -47,18 +64,16 @@ const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
     flexWrap: 'wrap',
-    flexDirection: 'row' 
+    flexDirection: 'row',
+    borderRadius: 2,
+    borderWidth: 2,
+    flex: 0,
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  main: {
+    flex: 0,
+    flexDirection: 'row',
+    // borderRadius: 2,
+    //   borderWidth: 2,
   },
   sectionTitle: {
     fontSize: 24,
@@ -66,24 +81,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     borderRadius: 2,
     borderWidth: 2,
-    margin: 10
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
+    margin: 10,
   },
 });
 
