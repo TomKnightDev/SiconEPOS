@@ -24,9 +24,7 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import APITest from './components/APITest';
-import ProductGroups from './components/ProductGroups';
-import MainLayout from './components/MainLayout';
+import MainLayout from './src/components/MainLayout';
 
 const App = () => {
   return (
