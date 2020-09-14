@@ -1,0 +1,32 @@
+[
+  {
+    "id": 0,
+    "code": "Veg",
+    "items": [
+      {
+        "id": 0,
+        "text": "Cabbage"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "code": "Dairy",
+    "items": [
+      {
+        "id": 0,
+        "text": "Cheese"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "code": "Fruit",
+    "items": [
+      {
+        "id": 0,
+        "text": "Apple"
+      }
+    ]
+  }
+]

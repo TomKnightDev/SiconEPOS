@@ -1,7 +1,8 @@
 export default function GetItems(props) {
    return (
         fetch(
-            props.uri,
+          'http://192.168.1.196/Sicon.Sage200.WebAPI/api/WorksOrderLineAPI/GetWorksOrderLines?WONumber=WO00000001'
+            // props.uri,
         )
           .then((response) => response.json())
           .then((json) => {

@@ -20,11 +20,11 @@ function StockItems(props) {
       <FlatList
         style={styles.list}
         numColumns={4}
-        data={props.selectedProductGroup.items}
-        keyExtractor={({id}, index) => id}
+        data={props.selectedProductGroup.Items}
+        keyExtractor={item => item.ItemID}
         renderItem={({item}) => (
           <TouchableOpacity>
-            <Text style={styles.listItem}>{item.text}</Text>
+            <Text style={styles.listItem}>{item.Code}</Text>
           </TouchableOpacity>
         )}
       />

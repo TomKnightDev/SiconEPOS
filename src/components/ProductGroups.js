@@ -1,33 +1,31 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import {Text, View, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import List from './List';
 import {connect} from 'react-redux';
-import {selectProductGroup} from '../actions/productGroup';
+import {selectProductGroup, getProductGroups} from '../actions/productGroup';
+import mockProductGroups from '../data_access/mock_product_groups.json';
 
 class ProductGroups extends Component {
   constructor(props) {
     super(props);
-
-    // this.state = {
-    //   items: [
-    //     {id: 0, text: 'Veg', uri: 'http://192.168.1.196/Sicon.Sage200.WebAPI/api/WorksOrderLineAPI/GetWorksOrderLines?WONumber=WO00000001'},
-    //     {id: 1, text: 'Dairy', uri: 'http://192.168.1.196/Sicon.Sage200.WebAPI/api/WorksOrderLineAPI/GetWorksOrderLines?WONumber=WO00000002'},
-    //   ],
-    // };
   }
 
   render() {
     return (
       <View style={styles.container}>
+        {/* <TouchableOpacity
+              onPress={() => this.props.getProductGroups()}>
+              <Text style={styles.listItem}>LOAD PRODUCT GROUPS</Text>
+            </TouchableOpacity> */}
         <FlatList
           style={styles.list}
           numColumns={2}
           data={this.props.productGroups}
-          keyExtractor={({id}, index) => id}
+          keyExtractor={item => item.ProductGroupID}
           renderItem={({item}) => (
             <TouchableOpacity
-              onPress={() => this.props.selectProductGroup(item.id)}>
-              <Text style={styles.listItem}>{item.text}</Text>
+              onPress={() => this.props.selectProductGroup(item.ProductGroupID)}>
+              <Text style={styles.listItem}>{item.Code}</Text>
             </TouchableOpacity>
           )}
         />
@@ -79,6 +77,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     selectProductGroup: (productGroup) =>
       dispatch(selectProductGroup(productGroup)),
+    getProductGroups: () => dispatch(getProductGroups()),
   };
 };
 
