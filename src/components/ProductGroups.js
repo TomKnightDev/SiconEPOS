@@ -1,22 +1,20 @@
 import React, {Component, useState, useEffect} from 'react';
-import {Text, View, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
-import List from './List';
+import {Text, View, StyleSheet, FlatList, TouchableOpacity, Alert} from 'react-native';
 import {connect} from 'react-redux';
 import {selectProductGroup, getProductGroups} from '../actions/productGroup';
-import mockProductGroups from '../data_access/mock_product_groups.json';
 
 class ProductGroups extends Component {
   constructor(props) {
     super(props);
   }
 
+  componentDidMount() {
+    this.props.getProductGroups()
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        {/* <TouchableOpacity
-              onPress={() => this.props.getProductGroups()}>
-              <Text style={styles.listItem}>LOAD PRODUCT GROUPS</Text>
-            </TouchableOpacity> */}
         <FlatList
           style={styles.list}
           numColumns={2}
@@ -30,15 +28,25 @@ class ProductGroups extends Component {
           )}
         />
       </View>
-      // <View>
-      //   <List
-      //     columnCount={2}
-      //     data={this.state.items}
-      //     customStyles={{backgroundColor: 'lightgreen'}}></List>
-      // </View>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    productGroups: state.productGroupReducer.productGroups,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    selectProductGroup: (productGroup) =>
+      dispatch(selectProductGroup(productGroup)),
+    getProductGroups: () => dispatch(getProductGroups()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductGroups);
 
 const styles = StyleSheet.create({
   container: {
@@ -66,19 +74,3 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
   },
 });
-
-const mapStateToProps = (state) => {
-  return {
-    productGroups: state.productGroupReducer.productGroups,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    selectProductGroup: (productGroup) =>
-      dispatch(selectProductGroup(productGroup)),
-    getProductGroups: () => dispatch(getProductGroups()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProductGroups);

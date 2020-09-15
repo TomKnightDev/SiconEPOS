@@ -19,8 +19,7 @@ export default function APITest(props) {
 
   useEffect(() => {
     fetch(
-      'http://192.168.1.196/Sicon.Sage200.WebAPI/api/Stock/GetProductGroups'
-      // 'http://192.168.1.196/Sicon.Sage200.WebAPI/api/WorksOrderLineAPI/GetWorksOrderLines?WONumber=WO00000001',
+      'http://192.168.1.196/Sicon.Sage200.WebAPI/api/Stock/GetProductGroups',
     )
       .then((response) => response.json())
       .then((json) => {

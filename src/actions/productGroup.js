@@ -1,7 +1,6 @@
 import {
   SELECT_PRODUCT_GROUP,
   GET_PRODUCT_GROUPS,
-  SET_PRODUCT_GROUPS,
 } from './types';
 import axios from 'axios';
 
@@ -22,8 +21,3 @@ export const getProductGroups = () => {
       });
   };
 };
-
-export const setProductGroups = (productGroups) => ({
-  type: SET_PRODUCT_GROUPS,
-  productGroups: productGroups,
-});

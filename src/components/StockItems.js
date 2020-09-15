@@ -13,6 +13,7 @@ import ListItem from './ListItem';
 import List from './List';
 import GetItems from '../data_access/getitems';
 import {connect} from 'react-redux';
+import { addToBasket } from '../actions/stockItem';
 
 function StockItems(props) {
   return (
@@ -23,7 +24,8 @@ function StockItems(props) {
         data={props.selectedProductGroup.Items}
         keyExtractor={item => item.ItemID}
         renderItem={({item}) => (
-          <TouchableOpacity>
+          <TouchableOpacity
+          onPress={() => {props.addToBasket(item)}}>
             <Text style={styles.listItem}>{item.Code}</Text>
           </TouchableOpacity>
         )}
@@ -31,6 +33,21 @@ function StockItems(props) {
     </View>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    selectedProductGroup: state.productGroupReducer.selectedProductGroup
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToBasket: (stockItem) =>
+      dispatch(addToBasket(stockItem))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(StockItems);
 
 const styles = StyleSheet.create({
   container: {
@@ -58,19 +75,3 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
   },
 });
-
-
-const mapStateToProps = (state) => {
-    return {
-      selectedProductGroup: state.productGroupReducer.selectedProductGroup
-    }
-  }
-  
-//   const mapDispatchToProps = (dispatch) => {
-//     return {
-//       selectProductGroup: (productGroup) =>
-//         dispatch(selectProductGroup(productGroup))
-//     }
-//   }
-  
-  export default connect(mapStateToProps)(StockItems);

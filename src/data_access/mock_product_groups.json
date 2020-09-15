@@ -1,31 +1,31 @@
 [
   {
-    "id": 0,
-    "code": "Veg",
-    "items": [
+    "ProductGroupID": 0,
+    "Code": "Veg",
+    "Items": [
       {
-        "id": 0,
-        "text": "Cabbage"
+        "ItemID": 0,
+        "Code": "Cabbage"
       }
     ]
   },
   {
-    "id": 1,
-    "code": "Dairy",
-    "items": [
+    "ProductGroupID": 1,
+    "Code": "Dairy",
+    "Items": [
       {
-        "id": 0,
-        "text": "Cheese"
+        "ItemID": 0,
+        "Code": "Cheese"
       }
     ]
   },
   {
-    "id": 2,
-    "code": "Fruit",
-    "items": [
+    "ProductGroupID": 2,
+    "Code": "Fruit",
+    "Items": [
       {
-        "id": 0,
-        "text": "Apple"
+        "ItemID": 0,
+        "Code": "Apple"
       }
     ]
   }

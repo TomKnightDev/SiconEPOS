@@ -1,19 +1,11 @@
-import React from 'react';
-import {View, Text} from 'react-native';
+import React, {Colors} from 'react';
+import {View, Text, StyleSheet, Alert} from 'react-native';
 import ProductGroups from './ProductGroups';
-import APITest from './APITest';
 import Basket from './Basket';
-import {createStore} from 'redux';
-import {Provider} from 'react-redux';
-
-import configureStore from '../store';
 import StockItems from './StockItems';
 
-const store = configureStore();
-
-const MainLayout = () => {
+const Store = ({navigation}) => {
   return (
-    <Provider store={store}>
       <View style={{flex: 1, flexDirection: 'row'}}>
         <View style={{flex: 1, backgroundColor: 'powderblue'}}>
           <ProductGroups></ProductGroups>
@@ -25,8 +17,9 @@ const MainLayout = () => {
           <Basket></Basket>
         </View>
       </View>
-    </Provider>
   );
 };
 
-export default MainLayout;
+export default Store;
+
+const styles = StyleSheet.create({});

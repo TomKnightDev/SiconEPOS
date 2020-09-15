@@ -1,31 +1,34 @@
 import React, {useState} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {connect} from 'react-redux';
 
-export default function Basket(props) {
-  const [items, setItems] = useState([
-    {id: 0, text: 'Veg', qty: 1},
-    {id: 1, text: 'Dairy', qty: 1},
-    {id: 2, text: 'Canned', qty: 1},
-    {id: 3, text: 'Fruit', qty: 1},
-    {id: 4, text: 'Alcohol', qty: 1},
-    {id: 5, text: 'Electrical', qty: 1},    
-  ]);
-
+function Basket(props) {
   return (
     <View style={styles.basket}>
       <FlatList
         inverted={true}
         style={styles.basketItemList}
-        data={items}
-        keyExtractor={({id}, index) => id}
+        data={props.basketItems}
+        keyExtractor={(item) => item.ItemID}
         renderItem={({item}) => (
-        <Text style={styles.basketItem}>{item.text}: {item.qty}</Text>
+          <TouchableOpacity>
+            <Text style={styles.basketItem}>{item.Code}</Text>
+          </TouchableOpacity>
         )}
       />
-      <Text style={styles.total}>Total: £40.14</Text>
+      <Text style={styles.total}>Total: £0.00</Text>
     </View>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    basketItems: state.stockItemReducer.basketItems
+  }
+}
+
+export default connect(mapStateToProps)(Basket);
 
 const styles = StyleSheet.create({
   basket: {
@@ -55,5 +58,5 @@ const styles = StyleSheet.create({
     color: 'black',
     borderStyle: 'solid',
     borderWidth: 1,
-  }
+  },
 });

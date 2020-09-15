@@ -1,86 +1,25 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  Flexbox,
-} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import Store from './src/components/Store';
+import Login from './src/components/Login';
+import {Provider} from 'react-redux';
+import configureStore from './src/store';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import MainLayout from './src/components/MainLayout';
+const Stack = createStackNavigator();
+const store = configureStore();
 
-const App = () => {
+const App = ({navigation}) => {
   return (
-    <>
-      <Text style={styles.sectionTitle}>Sicon EPOS</Text>
-      <MainLayout></MainLayout>
-      {/* <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <Text style={styles.sectionTitle}>Sicon EPOS</Text>
-        <View style={styles.main}>
-          <ScrollView
-            flex={.5}
-            contentInsetAdjustmentBehavior="automatic"
-            contentContainerStyle={styles.scrollView}>
-            <ProductGroups></ProductGroups>
-          </ScrollView>
-          <ScrollView
-            flex={4}
-            contentInsetAdjustmentBehavior="automatic"
-            contentContainerStyle={styles.scrollView}>
-            <APITest></APITest>
-          </ScrollView>
-          <ScrollView
-            flex={.5}
-            contentInsetAdjustmentBehavior="automatic"
-            contentContainerStyle={styles.scrollView}>            
-          </ScrollView>
-        </View>
-      </SafeAreaView> */}
-    </>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Login" component={Login}/>
+          <Stack.Screen name="Store" component={Store} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-    borderRadius: 2,
-    borderWidth: 2,
-    flex: 0,
-  },
-  main: {
-    flex: 0,
-    flexDirection: 'row',
-    // borderRadius: 2,
-    //   borderWidth: 2,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    color: Colors.black,
-    textAlign: 'center',
-    borderRadius: 2,
-    borderWidth: 2,
-    margin: 10,
-  },
-});
 
 export default App;
