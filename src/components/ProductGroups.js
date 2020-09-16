@@ -1,5 +1,12 @@
 import React, {Component, useState, useEffect} from 'react';
-import {Text, View, StyleSheet, FlatList, TouchableOpacity, Alert} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import {connect} from 'react-redux';
 import {selectProductGroup, getProductGroups} from '../actions/productGroup';
 
@@ -9,7 +16,7 @@ class ProductGroups extends Component {
   }
 
   componentDidMount() {
-    this.props.getProductGroups()
+    this.props.getProductGroups();
   }
 
   render() {
@@ -19,11 +26,14 @@ class ProductGroups extends Component {
           style={styles.list}
           numColumns={2}
           data={this.props.productGroups}
-          keyExtractor={item => item.ProductGroupID}
+          keyExtractor={(item) => item.ProductGroupID}
           renderItem={({item}) => (
             <TouchableOpacity
-              onPress={() => this.props.selectProductGroup(item.ProductGroupID)}>
-              <Text style={styles.listItem}>{item.Code}</Text>
+              style={styles.listItem}
+              onPress={() =>
+                this.props.selectProductGroup(item.ProductGroupID)
+              }>
+              <Text style={styles.listItemText}>{item.Code}</Text>
             </TouchableOpacity>
           )}
         />
@@ -56,13 +66,9 @@ const styles = StyleSheet.create({
   list: {
     flexWrap: 'wrap',
     flexDirection: 'row',
-    padding: 10,
-    // borderRadius: 2,
-    // borderWidth: 2,
+    padding: 0,
   },
   listItem: {
-    fontSize: 20,
-    padding: 5,
     color: 'black',
     borderStyle: 'solid',
     borderWidth: 1,
@@ -70,6 +76,12 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 10,
     margin: 1,
+    backgroundColor: '#EEE5E9',
+    elevation: 5
+  },
+  listItemText: {
+    flex: 1,
+    fontSize: 20,
     textAlign: 'center',
     textAlignVertical: 'center',
   },
