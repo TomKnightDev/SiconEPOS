@@ -11,10 +11,15 @@ class BarcodeService {
         this.#reactor.registerEvent(BARCODE_CAPTURE_EVENT);  
     }
 
+    pushString(value) {
+        console.log(value);
+        this.#reactor.dispatchEvent(BARCODE_CAPTURE_EVENT, value);
+    }
+
     pushCharacter(value) {
         if (value == "\n") {
             if (this.#barcodeString != "") {
-                this.#reactor.dispatchEvent(BARCODE_CAPTURE_EVENT, this.#barcodeString);
+                this.pushString(this.#barcodeString);
                 this.#barcodeString = "";
             }
         }
