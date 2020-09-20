@@ -1,15 +1,27 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Store from './src/components/Store';
 import Login from './src/components/Login';
 import {Provider} from 'react-redux';
 import configureStore from './src/store';
+import KeyEvent from 'react-native-keyevent';
+import barcodeService from './src/services/barcodeservice';
 
 const Stack = createStackNavigator();
 const store = configureStore();
 
 const App = ({navigation}) => {
+
+  useEffect(() => {
+    KeyEvent.onKeyDownListener((keyEvent) => {
+      barcodeService.pushCharacter(keyEvent.pressedKey);
+    });
+    return function cleanup() {
+       KeyEvent.removeKeyDownListener();
+    };
+  });
+
   return (
     <Provider store={store}>
       <NavigationContainer>
