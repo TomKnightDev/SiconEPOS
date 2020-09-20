@@ -2,6 +2,7 @@ import React, {Component, Colors, useEffect} from 'react';
 import {View, Text, StyleSheet, Alert, Button} from 'react-native';
 import ProductGroups from './ProductGroups';
 import Basket from './Basket';
+import BasketActions from './BasketActions'
 import StockItems from './StockItems';
 import barcodeService from '../services/barcodeservice';
 import {connect} from 'react-redux';
@@ -43,12 +44,14 @@ class Store extends Component {
           </TouchableOpacity>
         </View>
         <View style={styles.basket}>
-          <Basket></Basket>
+        <Basket navigation={navigation}></Basket>
+        <BasketActions navigation={navigation}></BasketActions>
         </View>
       </View>
     );
     }
 }
+
 const mapStateToProps = (state) => {
   return {
     };
@@ -69,7 +72,7 @@ const styles = StyleSheet.create({
     margin: 5,
     borderWidth: 2,
     borderColor: 'grey',
-    elevation: 5
+    elevation: 5,
   },
   stockItems: {
     flex: 2,
@@ -78,7 +81,7 @@ const styles = StyleSheet.create({
     margin: 5,
     borderWidth: 2,
     borderColor: 'grey',
-    elevation: 5
+    elevation: 5,
   },
   basket: {
     margin: 5,
@@ -88,6 +91,5 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 10,
     borderColor: 'grey',
-
   },
 });

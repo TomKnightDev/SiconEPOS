@@ -3,6 +3,7 @@ import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 import {removeFromBasket} from '../actions/stockItem';
+import BasketActions from './BasketActions';
 
 function Basket(props) {
   return (
@@ -51,7 +52,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(Basket);
 const styles = StyleSheet.create({
   basket: {
     padding: 10,
-    height: '100%',
+    flex: 1
+    // height: '80%',
   },
   basketItemList: {
     flex: 1,
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
   totalView: {
     flexDirection: 'row',
     borderWidth: 1,
-    borderRadius: 4,
+    // borderRadius: 4,
     padding: 4,
   },
   total: {
@@ -105,7 +107,7 @@ const styles = StyleSheet.create({
   modalView: {
     margin: 20,
     backgroundColor: 'white',
-    borderRadius: 20,
+    // borderRadius: 20,
     padding: 35,
     alignItems: 'center',
     shadowColor: '#000',
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
   },
   openButton: {
     backgroundColor: '#F194FF',
-    borderRadius: 20,
+    // borderRadius: 20,
     padding: 10,
     elevation: 2,
   },
