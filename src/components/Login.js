@@ -1,14 +1,65 @@
-import {Picker} from '@react-native-community/picker';
 import React, {Component} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {TextInput, TouchableOpacity} from 'react-native-gesture-handler';
-import {PickerItem} from 'react-native/Libraries/Components/Picker/Picker';
+import {
+  FlatList,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      warehouse: 'SHOWROOM',
+      numbers: [
+        {
+          value: 1,
+          text: '1',
+        },
+        {
+          value: 2,
+          text: '2',
+        },
+        {
+          value: 3,
+          text: '3',
+        },
+        {
+          value: 4,
+          text: '4',
+        },
+        {
+          value: 5,
+          text: '5',
+        },
+        {
+          value: 6,
+          text: '6',
+        },
+        {
+          value: 7,
+          text: '7',
+        },
+        {
+          value: 8,
+          text: '8',
+        },
+        {
+          value: 9,
+          text: '9',
+        },
+        {
+          value: 11,
+          text: 'Clear',
+        },
+        {
+          value: 0,
+          text: '0',
+        },
+        {
+          value: 12,
+          text: 'Enter',
+        },
+      ],
     };
   }
 
@@ -16,35 +67,29 @@ class Login extends Component {
     return (
       <View>
         <Text style={styles.title}>Welcome to Sicon EPOS</Text>
-        <View style={styles.section}>
-          <Text style={styles.text}>Enter web address: </Text>
-          <TextInput style={{...styles.input, marginRight: 10}}></TextInput>
-          <TouchableOpacity style={{...styles.loginButton}}>
-            <Text style={styles.loginButtonText}>Connect</Text>
-          </TouchableOpacity>
-        </View>
 
-        <View style={styles.section}>
-          <Text style={styles.text}>Select warehouse: </Text>
-          <Picker
-            selectedValue={this.state.warehouse}
-            style={{height: 50, width: 200}}
-            textStyle={{fontSize: 40}}
-            onValueChange={(itemValue, itemIndex) =>
-              this.setState({warehouse: itemValue})
-            }>
-            <Picker.Item label="SHOWROOM" value="SHOWROOM" />
-            <Picker.Item label="WAREHOUSE" value="WAREHOUSE" />
-            <Picker.Item label="FACTORY" value="FACTORY" />
-          </Picker>
-        </View>
-
-        <View style={{justifyContent: 'center'}}>
-          <TouchableOpacity
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <FlatList
+            style={styles.list}
+            numColumns={3}
+            data={this.state.numbers}
+            keyExtractor={(item) => item.value}
+            renderItem={({item}) => (
+              <TouchableOpacity
+                style={styles.listItem}
+                onPress={() => {
+                  if (item.text == 'Enter') {
+                    this.props.navigation.navigate('Store');
+                  }
+                }}>
+                <Text style={styles.listItemText}>{item.text}</Text>
+              </TouchableOpacity>
+            )}></FlatList>
+          {/* <TouchableOpacity
             style={styles.loginButton}
             onPress={() => this.props.navigation.navigate('Store')}>
             <Text style={styles.loginButtonText}>Login</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
     );
@@ -56,6 +101,7 @@ export default Login;
 const styles = StyleSheet.create({
   title: {
     margin: 20,
+    padding: 20,
     fontSize: 50,
     alignSelf: 'center',
     alignContent: 'center',
@@ -74,10 +120,12 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   loginButton: {
-    // margin: 20,
+    padding: 10,
     borderRadius: 2,
     borderWidth: 1,
     alignSelf: 'center',
+    backgroundColor: 'white',
+    width: 150,
   },
   loginButtonText: {
     padding: 10,
@@ -86,5 +134,27 @@ const styles = StyleSheet.create({
   section: {
     flexDirection: 'row',
     justifyContent: 'center',
+  },
+  list: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    padding: 0,
+  },
+  listItem: {
+    color: 'black',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+    margin: 1,
+    backgroundColor: 'white',
+    elevation: 1,
+  },
+  listItemText: {
+    flex: 1,
+    fontSize: 30,
+    textAlign: 'center',
+    textAlignVertical: 'center',
   },
 });

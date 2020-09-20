@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
-  Modal
+  Modal,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import ListItem from './ListItem';
@@ -18,6 +18,7 @@ import {addToBasket} from '../actions/stockItem';
 
 function StockItems(props) {
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState({});
 
   return (
     <View style={styles.container}>
@@ -28,13 +29,13 @@ function StockItems(props) {
         onRequestClose={() => {}}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
+            <Text style={styles.modalText}>{selectedItem.Code}</Text>
             <TouchableOpacity
-              style={{...styles.openButton, backgroundColor: '#2196F3'}}
+              style={styles.openButton}
               onPress={() => {
                 setModalVisible(false);
               }}>
-              <Text style={styles.textStyle}>Hide Modal</Text>
+              <Text style={{fontSize: 20, color: 'white'}}>Close</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -48,6 +49,7 @@ function StockItems(props) {
           <TouchableOpacity
             style={styles.listItem}
             onLongPress={() => {
+              setSelectedItem(item);
               setModalVisible(!modalVisible);
             }}
             onPress={() => {
@@ -111,7 +113,7 @@ const styles = StyleSheet.create({
   modalView: {
     margin: 20,
     backgroundColor: 'white',
-    borderRadius: 20,
+    borderRadius: 10,
     padding: 35,
     alignItems: 'center',
     shadowColor: '#000',
@@ -122,20 +124,26 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    width: 500,
+    // height: 300
   },
   openButton: {
-    backgroundColor: '#F194FF',
-    borderRadius: 20,
+    backgroundColor: '#2196F3',
+    borderRadius: 10,
     padding: 10,
     elevation: 2,
+    // alignSelf: 'flex-end'
   },
   textStyle: {
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
+    fontSize: 40
   },
   modalText: {
-    marginBottom: 15,
+    // marginBottom: 15,
     textAlign: 'center',
+    fontSize: 30,
+    margin: 20
   },
 });

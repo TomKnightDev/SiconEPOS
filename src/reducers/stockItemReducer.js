@@ -1,5 +1,5 @@
 import {act} from 'react-test-renderer';
-import {ADD_TO_BASKET, REMOVE_FROM_BASKET, ADD_TO_BASKET_VIA_BARCODE} from '../actions/types';
+import {ADD_TO_BASKET, REMOVE_FROM_BASKET, ADD_TO_BASKET_VIA_BARCODE, CLEAR_BASKET} from '../actions/types';
 
 const initialState = {
   basketItems: [],
@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const stockItemReducer = (state = initialState, action) => {
-  let newTotal = 0;
+  let newTotal = 0.0;
   let newBasketItems = [];
 
   switch (action.type) {
@@ -31,6 +31,8 @@ const stockItemReducer = (state = initialState, action) => {
       return {...state, basketItems: newBasketItems, basketTotal: newTotal};
     case ADD_TO_BASKET_VIA_BARCODE:
       return {...state }
+    case CLEAR_BASKET:
+      return {...state, basketItems: newBasketItems, basketTotal: newTotal};
     default:
       return state;
   }

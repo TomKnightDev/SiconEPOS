@@ -1,5 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {connect} from 'react-redux';
+import {clearBasketItems} from '../actions/stockItem';
 
 const BasketActions = (props) => {
   return (
@@ -8,10 +10,15 @@ const BasketActions = (props) => {
         flexDirection: 'row',
         // marginBottom: 10,
         // height: 50,
-        margin: 10
+        margin: 10,
       }}>
-      <View style={{flexDirection: 'row', marginTop: 10, height: 50, width: 100}}>
-        <TouchableOpacity style={styles.basketActions} onPress={() => {}}>
+      <View
+        style={{flexDirection: 'row', marginTop: 10, height: 50, width: 100}}>
+        <TouchableOpacity
+          style={styles.basketActions}
+          onPress={() => {
+            props.clearBasketItems();
+          }}>
           <Text style={{...styles.basketActionText, backgroundColor: 'red'}}>
             Clear
           </Text>
@@ -35,7 +42,17 @@ const BasketActions = (props) => {
   );
 };
 
-export default BasketActions;
+const mapStateToProps = (state) => {
+  return {};
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clearBasketItems: () => dispatch(clearBasketItems()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BasketActions);
 
 const styles = StyleSheet.create({
   basketActions: {

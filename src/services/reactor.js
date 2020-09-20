@@ -25,4 +25,8 @@ function Event(name){
     this.events[eventName].registerCallback(callback);
   };
 
+  Reactor.prototype.removeEventListener = function(eventName, callback){
+   this.events[eventName].callbacks.pop(callback);
+  };
+
   export default Reactor 
