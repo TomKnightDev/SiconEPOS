@@ -1,10 +1,23 @@
-import React, {Colors} from 'react';
+import React, {Colors, useEffect} from 'react';
 import {View, Text, StyleSheet, Alert} from 'react-native';
 import ProductGroups from './ProductGroups';
 import Basket from './Basket';
 import StockItems from './StockItems';
+import barcodeService from '../services/barcodeservice'
+
+let barcodeHandler = function (barcode) {
+  console.log(barcode);
+}
 
 const Store = ({navigation}) => {
+
+  useEffect(() => {
+    barcodeService.subscribe(barcodeHandler)
+    return function cleanup() {
+       barcodeService.unsubscribe(barcodeHandler)
+    };
+  });
+
   return (
     <View style={{flex: 1, flexDirection: 'row'}}>
       <View style={styles.productGroups}>
