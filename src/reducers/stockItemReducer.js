@@ -1,5 +1,5 @@
 import {act} from 'react-test-renderer';
-import {ADD_TO_BASKET, REMOVE_FROM_BASKET} from '../actions/types';
+import {ADD_TO_BASKET, REMOVE_FROM_BASKET, ADD_TO_BASKET_VIA_BARCODE} from '../actions/types';
 
 const initialState = {
   basketItems: [],
@@ -29,6 +29,8 @@ const stockItemReducer = (state = initialState, action) => {
         .filter((item) => item !== action.basketItem);
       newTotal = state.basketTotal - parseFloat(action.basketItem.Price);
       return {...state, basketItems: newBasketItems, basketTotal: newTotal};
+    case ADD_TO_BASKET_VIA_BARCODE:
+      return {...state }
     default:
       return state;
   }

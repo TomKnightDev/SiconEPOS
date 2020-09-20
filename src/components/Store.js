@@ -1,28 +1,68 @@
-import React, {Colors} from 'react';
-import {View, Text, StyleSheet, Alert} from 'react-native';
+import React, {Component, Colors, useEffect} from 'react';
+import {View, Text, StyleSheet, Alert, Button} from 'react-native';
 import ProductGroups from './ProductGroups';
 import Basket from './Basket';
 import BasketActions from './BasketActions'
 import StockItems from './StockItems';
+import barcodeService from '../services/barcodeservice';
+import {connect} from 'react-redux';
+import { addToBasketViaBarcode } from '../actions/stockItem';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const Store = ({navigation}) => {
-  return (
-    <View style={{flex: 1, flexDirection: 'row'}}>
-      <View style={styles.productGroups}>
-        <ProductGroups></ProductGroups>
-      </View>
-      <View style={styles.stockItems}>
-        <StockItems></StockItems>
-      </View>
-      <View style={styles.basket}>
+class Store extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  pushTestBarcode = () => {
+    barcodeService.pushString("12345678");
+  }
+
+  barcodeHandler = (barcode) => {
+    this.props.addToBasketViaBarcode(barcode);
+  }
+
+  componentDidMount() {
+    barcodeService.subscribe(this.barcodeHandler)
+  }
+
+  componentCleanup() {
+    barcodeService.unsubscribe(this.barcodeHandler)
+  }
+
+  render() {
+    return (
+      <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={styles.productGroups}>
+          <ProductGroups></ProductGroups>
+        </View>
+        <View style={styles.stockItems}>
+          <StockItems></StockItems>      
+          <TouchableOpacity    
+            onPress={this.pushTestBarcode}>
+            <Text>Test Barcode</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.basket}>
         <Basket navigation={navigation}></Basket>
         <BasketActions navigation={navigation}></BasketActions>
+        </View>
       </View>
-    </View>
-  );
+    );
+    }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    };
 };
 
-export default Store;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToBasketViaBarcode: (barcode) => dispatch(addToBasketViaBarcode(barcode)),
+  };
+}
+  export default connect(mapStateToProps, mapDispatchToProps)(Store);
 
 const styles = StyleSheet.create({
   productGroups: {
