@@ -8,6 +8,7 @@ import barcodeService from '../services/barcodeservice';
 import {connect} from 'react-redux';
 import {addToBasketViaBarcode} from '../actions/stockItem';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import SecondDisplay from './SecondDisplay'
 
 class Store extends Component {
   constructor(props) {
@@ -32,12 +33,14 @@ class Store extends Component {
 
   render() {
     return (
-      <View style={{flex: 1, flexDirection: 'row'}}>
-        <View style={styles.productGroups}>
-          <ProductGroups></ProductGroups>
-        </View>
-        <View style={styles.stockItems}>
-          {/* <TouchableOpacity onPress={this.pushTestBarcode}>
+      <>
+        <SecondDisplay></SecondDisplay>
+        <View style={{flex: 1, flexDirection: 'row'}}>
+          <View style={styles.productGroups}>
+            <ProductGroups></ProductGroups>
+          </View>
+          <View style={styles.stockItems}>
+            {/* <TouchableOpacity onPress={this.pushTestBarcode}>
             <Text
               style={{
                 fontSize: 20,
@@ -52,13 +55,14 @@ class Store extends Component {
               Test Barcode
             </Text>
           </TouchableOpacity> */}
-          <StockItems></StockItems>
+            <StockItems></StockItems>
+          </View>
+          <View style={styles.basket}>
+            <Basket navigation={this.props.navigation}></Basket>
+            <BasketActions navigation={this.props.navigation}></BasketActions>
+          </View>
         </View>
-        <View style={styles.basket}>
-          <Basket navigation={this.props.navigation}></Basket>
-          <BasketActions navigation={this.props.navigation}></BasketActions>
-        </View>
-      </View>
+      </>
     );
   }
 }

@@ -11,6 +11,7 @@ import barcodeService from './src/services/barcodeservice';
 import Settings from './src/components/Settings';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Button, Modal, View, StyleSheet, Text, LogoTitle} from 'react-native';
+import SecondDisplay from './src/components/SecondDisplay';
 
 const Stack = createStackNavigator();
 const store = configureStore();

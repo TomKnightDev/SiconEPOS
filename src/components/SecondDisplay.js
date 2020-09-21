@@ -1,0 +1,160 @@
+import React from 'react';
+import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {connect} from 'react-redux';
+
+import ExternalDisplay, {
+  useExternalDisplay,
+} from 'react-native-external-display';
+
+const SecondDisplay = (props) => {
+  const screens = useExternalDisplay();
+
+  const data = [
+    {
+      ID: 0,
+      Code: 'Test',
+      Price: 1.0,
+    },
+    {
+      ID: 0,
+      Code: 'Test',
+      Price: 1.0,
+    },
+    {
+      ID: 0,
+      Code: 'Test',
+      Price: 1.0,
+    },
+  ];
+
+  return (
+    <View>
+      <ExternalDisplay
+        mainScreenStyle={{flex: 1}}
+        fallbackInMainScreen
+        screen={Object.keys(screens)[0]}>
+        <View style={styles.basket}>
+          <FlatList
+            inverted={true}
+            style={styles.basketItemList}
+            data={data}
+            keyExtractor={(item) => item.ID}
+            renderItem={({item}) => (
+              <TouchableOpacity style={{flexDirection: 'row'}}>
+                <Text style={styles.basketItem}>{item.Code}</Text>
+                <Text style={styles.basketItemPrice}>£{item.Price}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+        <View style={styles.totalView}>
+          <Text style={styles.total}>Total:</Text>
+          <Text style={styles.totalValue}>
+            £{parseFloat(props.basketTotal).toFixed(2)}
+          </Text>
+        </View>
+      </ExternalDisplay>
+    </View>
+  );
+};
+
+const mapStateToProps = (state) => {
+  return {
+    basketItems: state.stockItemReducer.basketItems,
+    basketTotal: state.stockItemReducer.basketTotal,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SecondDisplay);
+
+const styles = StyleSheet.create({
+  basket: {
+    padding: 10,
+    flex: 1,
+    // height: '80%',
+  },
+  basketItemList: {
+    flex: 1,
+    padding: 5,
+  },
+  basketItem: {
+    flex: 2,
+    fontSize: 60,
+    padding: 0,
+    color: 'black',
+    borderRadius: 2,
+    margin: 1,
+    textAlign: 'left',
+    textAlignVertical: 'center',
+  },
+  basketItemPrice: {
+    flex: 1,
+    fontSize: 60,
+    padding: 0,
+    color: 'black',
+    borderRadius: 2,
+    margin: 1,
+    textAlign: 'right',
+    textAlignVertical: 'center',
+  },
+  totalView: {
+    flexDirection: 'row',
+    borderWidth: 1,
+    // borderRadius: 4,
+    padding: 4,
+  },
+  total: {
+    flex: 1,
+    fontSize: 60,
+    // padding: 5,
+    color: 'black',
+  },
+  totalValue: {
+    flex: 1,
+    fontSize: 60,
+    // padding: 5,
+    color: 'black',
+    textAlign: 'right',
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    // borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  openButton: {
+    backgroundColor: '#F194FF',
+    // borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+});
