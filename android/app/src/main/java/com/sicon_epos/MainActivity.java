@@ -50,10 +50,10 @@ public class MainActivity extends ReactActivity {
         return false;
     }
 
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        return handleKey(keyCode, event);
-    }
+    // @Override
+    // public boolean onKeyUp(int keyCode, KeyEvent event) {
+    //     return handleKey(keyCode, event);
+    // }
 
     @Override
     public boolean onKeyMultiple(int keyCode, int repeatCount, KeyEvent event) {

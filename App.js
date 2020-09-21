@@ -18,7 +18,9 @@ const store = configureStore();
 const App = ({navigation}) => {
   useEffect(() => {
     KeyEvent.onKeyDownListener((keyEvent) => {
-      barcodeService.pushCharacter(keyEvent.pressedKey);
+      if (keyEvent.keyCode != 59) {
+        barcodeService.pushCharacter(keyEvent.pressedKey);
+      }
     });
     return function cleanup() {
       KeyEvent.removeKeyDownListener();
@@ -32,7 +34,7 @@ const App = ({navigation}) => {
           <Stack.Screen
             name="Login"
             component={Login}
-            options={({navigation}) => ({              
+            options={({navigation}) => ({
               title: 'Login',
               headerRight: () => (
                 <Button

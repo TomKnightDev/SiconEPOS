@@ -15,7 +15,7 @@ class Store extends Component {
   }
 
   pushTestBarcode = () => {
-    barcodeService.pushString('12345678');
+    barcodeService.pushString('ACS/BLENDER');
   };
 
   barcodeHandler = (barcode) => {
@@ -37,7 +37,7 @@ class Store extends Component {
           <ProductGroups></ProductGroups>
         </View>
         <View style={styles.stockItems}>
-          <TouchableOpacity onPress={this.pushTestBarcode}>
+          {/* <TouchableOpacity onPress={this.pushTestBarcode}>
             <Text
               style={{
                 fontSize: 20,
@@ -51,7 +51,7 @@ class Store extends Component {
               }}>
               Test Barcode
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <StockItems></StockItems>
         </View>
         <View style={styles.basket}>

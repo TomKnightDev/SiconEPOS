@@ -9,12 +9,12 @@ export const addToBasket = (stockItem) => {
 export const addToBasketViaBarcode = (barcode) => {
     return (dispatch, getState) => {
         var productGroups = getState().productGroupReducer.productGroups;
+        console.log(barcode);
 
-        let stockItem = {};
+        let stockItem = null;
 
         for (let pi = 0; pi < productGroups.length; pi++) {
-            for (let ii = 0; ii < productGroups[pi].Items.length; ii++) {   
-                console.log(productGroups[pi].Items[ii])            
+            for (let ii = 0; ii < productGroups[pi].Items.length; ii++) {          
                 if (productGroups[pi].Items[ii].Barcode == barcode) {
                     stockItem = productGroups[pi].Items[ii];
                     break;
@@ -22,12 +22,11 @@ export const addToBasketViaBarcode = (barcode) => {
             }
             
             if (stockItem != null) {
-                console.log("Break", stockItem)
+                dispatch({type: ADD_TO_BASKET, stockItem: stockItem});
                 break;
             }
         }
 
-        dispatch({type: ADD_TO_BASKET, stockItem: stockItem});
         // dispatch({type: ADD_TO_BASKET_VIA_BARCODE, barcode: barcode});
     };
 };
