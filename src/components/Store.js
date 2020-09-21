@@ -34,7 +34,7 @@ class Store extends Component {
   render() {
     return (
       <>
-        <SecondDisplay></SecondDisplay>
+        {/* <SecondDisplay></SecondDisplay> */}
         <View style={{flex: 1, flexDirection: 'row'}}>
           <View style={styles.productGroups}>
             <ProductGroups></ProductGroups>

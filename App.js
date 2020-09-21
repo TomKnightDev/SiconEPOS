@@ -30,6 +30,7 @@ const App = ({navigation}) => {
 
   return (
     <Provider store={store}>
+      <SecondDisplay></SecondDisplay>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen

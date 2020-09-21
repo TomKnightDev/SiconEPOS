@@ -10,52 +10,33 @@ import ExternalDisplay, {
 const SecondDisplay = (props) => {
   const screens = useExternalDisplay();
 
-  const data = [
-    {
-      ID: 0,
-      Code: 'Test',
-      Price: 1.0,
-    },
-    {
-      ID: 0,
-      Code: 'Test',
-      Price: 1.0,
-    },
-    {
-      ID: 0,
-      Code: 'Test',
-      Price: 1.0,
-    },
-  ];
-
   return (
-    <View>
-      <ExternalDisplay
-        mainScreenStyle={{flex: 1}}
-        fallbackInMainScreen
-        screen={Object.keys(screens)[0]}>
-        <View style={styles.basket}>
-          <FlatList
-            inverted={true}
-            style={styles.basketItemList}
-            data={data}
-            keyExtractor={(item) => item.ID}
-            renderItem={({item}) => (
-              <TouchableOpacity style={{flexDirection: 'row'}}>
-                <Text style={styles.basketItem}>{item.Code}</Text>
-                <Text style={styles.basketItemPrice}>£{item.Price}</Text>
-              </TouchableOpacity>
-            )}
-          />
-        </View>
+    <ExternalDisplay
+      mainScreenStyle={{flex: 1}}
+      fallbackInMainScreen
+      screen={Object.keys(screens)[0]}>
+      <View style={styles.basket}>
+        <Text style={styles.title}>Sicon EPOS</Text>
+        <FlatList
+          inverted={true}
+          style={styles.basketItemList}
+          data={props.basketItems}
+          keyExtractor={(item) => item.ID}
+          renderItem={({item}) => (
+            <TouchableOpacity style={{flexDirection: 'row'}}>
+              <Text style={styles.basketItem}>{item.Code}</Text>
+              <Text style={styles.basketItemPrice}>£{item.Price}</Text>
+            </TouchableOpacity>
+          )}
+        />
         <View style={styles.totalView}>
           <Text style={styles.total}>Total:</Text>
           <Text style={styles.totalValue}>
             £{parseFloat(props.basketTotal).toFixed(2)}
           </Text>
         </View>
-      </ExternalDisplay>
-    </View>
+      </View>
+    </ExternalDisplay>
   );
 };
 
@@ -73,9 +54,16 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(mapStateToProps, mapDispatchToProps)(SecondDisplay);
 
 const styles = StyleSheet.create({
+  title: {
+    fontSize: 60,
+    textAlign: 'center'
+  },
   basket: {
     padding: 10,
     flex: 1,
+    borderRadius: 1,
+    borderWidth: 1,
+    margin: 10
     // height: '80%',
   },
   basketItemList: {
@@ -84,7 +72,7 @@ const styles = StyleSheet.create({
   },
   basketItem: {
     flex: 2,
-    fontSize: 60,
+    fontSize: 50,
     padding: 0,
     color: 'black',
     borderRadius: 2,
@@ -94,7 +82,7 @@ const styles = StyleSheet.create({
   },
   basketItemPrice: {
     flex: 1,
-    fontSize: 60,
+    fontSize: 50,
     padding: 0,
     color: 'black',
     borderRadius: 2,
@@ -120,41 +108,5 @@ const styles = StyleSheet.create({
     // padding: 5,
     color: 'black',
     textAlign: 'right',
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    // borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  openButton: {
-    backgroundColor: '#F194FF',
-    // borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
   },
 });
