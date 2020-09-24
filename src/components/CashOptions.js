@@ -1,6 +1,7 @@
 import React, {Component, useState} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
+import {connect} from 'react-redux';
 
 export class CashOptions extends Component {
   constructor(props) {
@@ -75,7 +76,7 @@ export class CashOptions extends Component {
     ];
 
     return (
-      <View style={{alignSelf: 'center', flex: 1}}>
+      <View style={{alignSelf: 'center', alignItems: 'center'}}>
         <FlatList
           numColumns={4}
           data={denominations}
@@ -102,13 +103,33 @@ export class CashOptions extends Component {
               £{this.state.taken}
             </Text>
           </View>
+          <View style={{...styles.taken, flexDirection: 'row'}}>
+            <Text style={styles.buttonText}>Change due: </Text>
+            <Text style={{...styles.buttonText, marginLeft: 'auto'}}>
+              £{this.state.basketTotal - this.state.taken}
+            </Text>
+          </View>
         </View>
       </View>
     );
   }
 }
 
-export default CashOptions;
+
+const mapStateToProps = (state) => {
+  return {
+    basketItems: state.stockItemReducer.basketItems,
+    basketTotal: state.stockItemReducer.basketTotal,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CashOptions);
 
 const styles = StyleSheet.create({
   payOption: {
@@ -121,23 +142,23 @@ const styles = StyleSheet.create({
   },
   taken: {
     height: 50,
-    width: 250,
+    width: 220,
     borderWidth: 1,
     margin: 10,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     paddingRight: 10,
     paddingLeft: 10,
   },
   clear: {
     height: 50,
-    width: 150,
+    width: 100,
     borderWidth: 1,
     margin: 10,
     justifyContent: 'center',
     padding: 10,
   },
   buttonText: {
-    fontSize: 30,
+    fontSize: 25,
     textAlign: 'center',
     textAlignVertical: 'center',
   },

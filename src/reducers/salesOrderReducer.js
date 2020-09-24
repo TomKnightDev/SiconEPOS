@@ -4,7 +4,6 @@ import {CREATE_SALES_ORDER} from '../actions/types';
 
 const initialState = {
   salesOrders: [],
-  taken: 0
 };
 
 const salesOrderReducer = (state = initialState, action) => {
