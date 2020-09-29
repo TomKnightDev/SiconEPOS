@@ -16,7 +16,7 @@ const SecondDisplay = (props) => {
       fallbackInMainScreen
       screen={Object.keys(screens)[0]}>
       <View style={styles.basket}>
-        <Text style={styles.title}>Sicon EPOS</Text>
+        <Text style={styles.title}>Cashier in training...</Text>
         <FlatList
           inverted={true}
           style={styles.basketItemList}
@@ -59,7 +59,8 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   basket: {
-    padding: 10,
+    padding:
+     10,
     flex: 1,
     borderRadius: 1,
     borderWidth: 1,

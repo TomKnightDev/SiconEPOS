@@ -126,5 +126,6 @@ const styles = StyleSheet.create({
   section: {
     flexDirection: 'row',
     justifyContent: 'center',
+    padding: 20
   },
 });

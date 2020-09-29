@@ -1,7 +1,4 @@
-import {
-  SELECT_PRODUCT_GROUP,
-  GET_PRODUCT_GROUPS,
-} from '../actions/types';
+import {SELECT_PRODUCT_GROUP, GET_PRODUCT_GROUPS} from '../actions/types';
 
 const initialState = {
   productGroups: [],
@@ -22,8 +19,8 @@ const productGroupReducer = (state = initialState, action) => {
       }
       return {...state, selectedProductGroup: pg};
     case GET_PRODUCT_GROUPS:
-      console.log('Getting product groups')
-      return Object.assign({}, state, {productGroups: action.payload} );
+      console.log('Getting product groups');
+      return Object.assign({}, state, {productGroups: action.payload});
     default:
       return state;
   }
