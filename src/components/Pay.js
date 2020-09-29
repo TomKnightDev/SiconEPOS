@@ -1,36 +1,50 @@
-import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
+import React, {Component} from 'react';
+import {Text, View, StyleSheet} from 'react-native';
+import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import GetItems from '../data_access/getitems';
 import Basket from './Basket';
 import CashOptions from './CashOptions';
-import { connect } from 'react-redux';
-import { createSalesOrder } from '../actions/salesOrder';
-
-import { NativeRouter as Router, Route, Link } from 'react-router-native';
+import {connect} from 'react-redux';
+import {createSalesOrder} from '../actions/salesOrder';
+import PrintService from '../services/printService';
+import {NativeRouter as Router, Route, Link} from 'react-router-native';
 import CardPayment from './CardPayment';
 
 class Pay extends Component {
   constructor(props) {
     super(props);
+
+    this.printService = new PrintService();
+    this.printService.connectPrinter(1);
   }
+
+  printReceipt = () => {
+    this.props.basketItems.forEach((item) => {
+      //Work out the padding
+      var line = `<C>${item.Code}: ${item.Price}</C>\n`;
+      this.printService.printText(line);
+    });
+
+    this.printService.printAndCut('<C>Thank you for using Sicon EPOS</C>');
+    this.printService.openCashDrawer();
+  };
 
   render() {
     const items = [
       {
         id: 0,
         text: 'Cash',
-        route: "/cash"
+        route: '/cash',
       },
       {
         id: 1,
         text: 'Card',
-        route: "/card"
+        route: '/card',
       },
       {
         id: 2,
         text: 'Sage Pay',
-        route: "/sagepay"
+        route: '/sagepay',
       },
     ];
 
@@ -42,7 +56,7 @@ class Pay extends Component {
               numColumns={1}
               data={items}
               keyExtractor={(item) => item.id}
-              renderItem={({ item }) => (
+              renderItem={({item}) => (
                 <Link to={item.route}>
                   <TouchableOpacity style={styles.payOption}>
                     <Text style={styles.payOptionText}>{item.text}</Text>
@@ -59,14 +73,14 @@ class Pay extends Component {
             </View>
             <View style={styles.enter}>
               <TouchableOpacity
-                onPress={() =>
-                  this.props.createSalesOrder('CASH01', this.props.basketItems)
-                }>
+                onPress={() => {
+                  this.printReceipt();
+                  this.props.createSalesOrder('CASH01', this.props.basketItems);
+                }}>
                 <Text style={styles.enterText}>Process</Text>
               </TouchableOpacity>
             </View>
           </View>
-
         </Router>
         <Basket></Basket>
       </View>
@@ -125,6 +139,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   payment: {
-    flex: 1
+    flex: 1,
   },
 });

@@ -16,7 +16,7 @@ export class Settings extends Component {
     };
    
     this.printService = new PrintService();
-    this.printService.connectPrinter(0);
+    this.printService.connectPrinter(1);
   }
 
   componentDidMount = async () => {

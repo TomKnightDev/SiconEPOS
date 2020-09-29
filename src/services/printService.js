@@ -16,11 +16,11 @@ class PrintService {
 
         
   printText(value) {
-    RNUSBPrinter.printText("This is test print.\n");
+    RNUSBPrinter.printText(value);
   }
 
   printAndCut(value) {
-    RNUSBPrinter.printBillTextWithCut("This is test print.\n");
+    RNUSBPrinter.printBillTextWithCut(value);
   }
 
   openCashDrawer() {

@@ -10,6 +10,10 @@ import ExternalDisplay, {
 const SecondDisplay = (props) => {
   const screens = useExternalDisplay();
 
+  if (Object.keys(screens).length == 0) {
+    return <View></View>;
+  }
+
   return (
     <ExternalDisplay
       mainScreenStyle={{flex: 1}}
@@ -56,15 +60,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(SecondDisplay);
 const styles = StyleSheet.create({
   title: {
     fontSize: 60,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   basket: {
-    padding:
-     10,
+    padding: 10,
     flex: 1,
     borderRadius: 1,
     borderWidth: 1,
-    margin: 10
+    margin: 10,
     // height: '80%',
   },
   basketItemList: {
