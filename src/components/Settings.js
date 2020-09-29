@@ -1,15 +1,44 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, NativeModules} from 'react-native';
 import {TouchableOpacity, TextInput} from 'react-native-gesture-handler';
 import {Picker} from '@react-native-community/picker';
+import PrintService from '../services/printService'
 
 export class Settings extends Component {
+
+  printService = null;
+
   constructor(props) {
     super(props);
     this.state = {
       warehouse: 'SHOWROOM',
+      deviceList: []
     };
+   
+    this.printService = new PrintService();
+    this.printService.connectPrinter(0);
   }
+
+  componentDidMount = async () => {
+    
+    this.setState(Object.assign({}, this.state, {
+        printedSelected: printedSelected,
+        deviceList: devices,
+      }));
+  }
+
+  printTest = () => {
+    this.printService.printText("<C>Test Line</C>\n");
+  }
+
+  printAndCutTest = () => {
+    this.printService.printAndCut("<C>Test And Cut Line</C>");
+  }
+  
+  popCashDrawer = () => {
+    this.printService.openCashDrawer();
+  }
+
   render() {
     return (
       <View>
@@ -37,7 +66,29 @@ export class Settings extends Component {
             <Picker.Item label="FACTORY" value="FACTORY" />
           </Picker>
         </View>
+        <View style={styles.container}>
+        {
+          this.state.deviceList.map(device => (
+            <Text key={device.device_id}>
+              {`device_name: ${device.device_name}, device_id: ${device.device_id}, vendor_id: ${device.vendor_id}, product_id: ${device.product_id}`}
+            </Text>
+            ))
+        }
+        <TouchableOpacity style={{...styles.loginButton}} onPress={() => this.printTest()}>
+          <Text  style={styles.loginButtonText}> Print Line </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={{...styles.loginButton}} onPress={() => this.printAndCutTest()}>
+          <Text  style={styles.loginButtonText}> Print And Cut Line </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={{...styles.loginButton}} onPress={() => this.popCashDrawer()}>
+          <Text  style={styles.loginButtonText}> Pop Cash Drawer </Text>
+        </TouchableOpacity>
+
+        
       </View>
+      </View>
+      
     );
   }
 }
