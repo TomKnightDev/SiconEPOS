@@ -33,7 +33,7 @@ class ProductGroups extends Component {
               onPress={() =>
                 this.props.selectProductGroup(item.ProductGroupID)
               }>
-              <Text style={styles.listItemText}>{item.Code}</Text>
+              <Text style={styles.listItemText}>{item.Description}</Text>
             </TouchableOpacity>
           )}
         />

@@ -4,6 +4,7 @@ import {
   ADD_TO_BASKET_VIA_BARCODE,
   CLEAR_BASKET,
   UPDATE_BASKET_ITEM_PRICE,
+  GET_STOCK_ITEM_IMAGE,
 } from './types';
 import axios from 'axios';
 
@@ -15,18 +16,23 @@ export const addToBasket = (stockItem) => {
     console.log(customerRef);
     axios
       .get(
-        'http://10.0.0.91/Sicon.Sage200.WebAPI/api/PriceBook/GetSellingPriceForCustomerStockItem',
+        // 'http://10.0.0.91/Sicon.Sage200.WebAPI/api/PriceBook/GetSellingPriceForCustomerStockItem',
+        'http://192.168.122.66/Sicon.Sage200.WebAPI/api/PriceBook/GetSellingPriceForCustomerStockItem',
         {
           params: {
             CustomerReference: customerRef,
             StockItemCode: stockItem.Code,
-            LineQuantity: 1
+            LineQuantity: 1,
           },
         },
       )
       .then(function (response) {
-          console.log(response);
-        dispatch({type: UPDATE_BASKET_ITEM_PRICE, code: stockItem.Code, payload: response.data});
+        console.log(response);
+        dispatch({
+          type: UPDATE_BASKET_ITEM_PRICE,
+          code: stockItem.Code,
+          payload: response.data,
+        });
       });
   };
 };
@@ -65,5 +71,27 @@ export const removeFromBasket = (basketItem) => {
 export const clearBasketItems = () => {
   return (dispatch, getState) => {
     dispatch({type: CLEAR_BASKET});
+  };
+};
+
+export const getStockItemImage = (stockItem) => {
+  return (dispatch, getState) => {
+
+    axios
+    .get(
+      'http://10.0.0.91/Sicon.Sage200.WebAPI/api/StockItemImages/GetDefaultImage',
+      {
+        params: {
+          itemCode: stockItem.Code
+        },
+      },
+    )
+    .then(function (response) {
+      console.log(response);
+      dispatch({
+        type: GET_STOCK_ITEM_IMAGE,
+        payload: response.data,
+      });
+    });
   };
 };

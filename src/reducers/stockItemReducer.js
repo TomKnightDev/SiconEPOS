@@ -1,16 +1,17 @@
-import {act} from 'react-test-renderer';
 import {
   ADD_TO_BASKET,
   REMOVE_FROM_BASKET,
   ADD_TO_BASKET_VIA_BARCODE,
   CLEAR_BASKET,
   UPDATE_BASKET_ITEM_PRICE,
+  GET_STOCK_ITEM_IMAGE,
 } from '../actions/types';
 
 const initialState = {
   basketItems: [],
   basketItemID: 0,
   basketTotal: 0.0,
+  stockItemImage: {}
 };
 
 const stockItemReducer = (state = initialState, action) => {
@@ -48,8 +49,8 @@ const stockItemReducer = (state = initialState, action) => {
       newBasketItems = state.basketItems.slice();
 
       for (let i = 0; i < newBasketItems.length; i++) {
-        if ((newBasketItems[i].Code == action.code)) {
-          newBasketItems[i].Price = action.payload;
+        if (newBasketItems[i].Code == action.code) {
+          newBasketItems[i].Price = Number(action.payload);
         }
         newTotal += newBasketItems[i].Price;
       }
@@ -59,6 +60,8 @@ const stockItemReducer = (state = initialState, action) => {
         basketTotal: newTotal,
         basketItemID: newBasketItemID,
       };
+    case GET_STOCK_ITEM_IMAGE:
+      return state;
     default:
       return state;
   }

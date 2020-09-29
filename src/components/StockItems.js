@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Alert,
   Modal,
+  Image,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import ListItem from './ListItem';
@@ -15,6 +16,8 @@ import List from './List';
 import GetItems from '../data_access/getitems';
 import {connect} from 'react-redux';
 import {addToBasket} from '../actions/stockItem';
+import {ScrollView} from 'react-native-gesture-handler';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 function StockItems(props) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -29,7 +32,22 @@ function StockItems(props) {
         onRequestClose={() => {}}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>{selectedItem.Code}</Text>
+            <Text style={styles.modalText}>
+              {selectedItem.Name} £{selectedItem.Price}
+            </Text>
+            <SafeAreaView style={{height: 100}}>
+              <ScrollView>
+                <Text style={{fontSize: 15}}>{selectedItem.Description}</Text>
+              </ScrollView>
+            </SafeAreaView>
+            <Image
+              style={{margin: 10}}
+              source={{
+                uri: `http://192.168.122.66/Sicon.Sage200.WebAPI/api/StockItemImagesFile/GetDefaultImageAsImage?itemCode=${selectedItem.Code}`,
+                width: 300,
+                height: 300,
+              }}
+            />
             <TouchableOpacity
               style={styles.openButton}
               onPress={() => {
@@ -51,12 +69,12 @@ function StockItems(props) {
             onPress={() => {
               props.addToBasket(item);
             }}
-            // onLongPress={() => {
-            //   setSelectedItem(item);
-            //   setModalVisible(!modalVisible);
-            // }}
-            >
-            <Text style={styles.listItemText}>{item.Code}</Text>
+            delayLongPress={1500}
+            onLongPress={() => {
+              setSelectedItem(item);
+              setModalVisible(!modalVisible);
+            }}>
+            <Text style={styles.listItemText}>{item.Name}</Text>
           </TouchableOpacity>
         )}
       />
@@ -147,6 +165,6 @@ const styles = StyleSheet.create({
     // marginBottom: 15,
     textAlign: 'center',
     fontSize: 30,
-    margin: 20,
+    margin: 10,
   },
 });
