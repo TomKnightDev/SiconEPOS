@@ -1,5 +1,11 @@
 import {act} from 'react-test-renderer';
-import {ADD_TO_BASKET, REMOVE_FROM_BASKET, ADD_TO_BASKET_VIA_BARCODE, CLEAR_BASKET} from '../actions/types';
+import {
+  ADD_TO_BASKET,
+  REMOVE_FROM_BASKET,
+  ADD_TO_BASKET_VIA_BARCODE,
+  CLEAR_BASKET,
+  UPDATE_BASKET_ITEM_PRICE,
+} from '../actions/types';
 
 const initialState = {
   basketItems: [],
@@ -21,7 +27,12 @@ const stockItemReducer = (state = initialState, action) => {
       });
       newTotal = state.basketTotal + parseFloat(action.stockItem.Price);
       let newBasketItemID = state.baskItemID + 1;
-      return {...state, basketItems: newBasketItems, basketTotal: newTotal, basketItemID: newBasketItemID};
+      return {
+        ...state,
+        basketItems: newBasketItems,
+        basketTotal: newTotal,
+        basketItemID: newBasketItemID,
+      };
     case REMOVE_FROM_BASKET:
       console.log(action.baskItem);
       newBasketItems = state.basketItems
@@ -30,9 +41,24 @@ const stockItemReducer = (state = initialState, action) => {
       newTotal = state.basketTotal - parseFloat(action.basketItem.Price);
       return {...state, basketItems: newBasketItems, basketTotal: newTotal};
     case ADD_TO_BASKET_VIA_BARCODE:
-      return {...state }
+      return {...state};
     case CLEAR_BASKET:
       return {...state, basketItems: newBasketItems, basketTotal: newTotal};
+    case UPDATE_BASKET_ITEM_PRICE:
+      newBasketItems = state.basketItems.slice();
+
+      for (let i = 0; i < newBasketItems.length; i++) {
+        if ((newBasketItems[i].Code == action.code)) {
+          newBasketItems[i].Price = action.payload;
+        }
+        newTotal += newBasketItems[i].Price;
+      }
+      return {
+        ...state,
+        basketItems: newBasketItems,
+        basketTotal: newTotal,
+        basketItemID: newBasketItemID,
+      };
     default:
       return state;
   }

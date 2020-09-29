@@ -61,23 +61,29 @@ export default connect(mapStateToProps, mapDispatchToProps)(ProductGroups);
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    alignItems: 'center',
+    // alignItems: 'center',
+    // flex: 1,
   },
   list: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
+    // flexWrap: 'wrap',
+    // flexDirection: 'row',
     padding: 0,
+    // display: 'flex',
+    // flex: 1,
+    width: '100%',
+    // borderWidth: 10
   },
   listItem: {
     color: 'black',
     borderStyle: 'solid',
     borderWidth: 1,
-    width: 140,
+    // width: '100%',
     height: 100,
-    borderRadius: 10,
+    // borderRadius: 10,
     margin: 1,
-    backgroundColor: '#EEE5E9',
-    elevation: 5
+    backgroundColor: '#FFFFFF',
+    // elevation: 5,
+    flex: 1
   },
   listItemText: {
     flex: 1,

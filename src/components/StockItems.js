@@ -48,13 +48,14 @@ function StockItems(props) {
         renderItem={({item}) => (
           <TouchableOpacity
             style={styles.listItem}
-            onLongPress={() => {
-              setSelectedItem(item);
-              setModalVisible(!modalVisible);
-            }}
             onPress={() => {
               props.addToBasket(item);
-            }}>
+            }}
+            // onLongPress={() => {
+            //   setSelectedItem(item);
+            //   setModalVisible(!modalVisible);
+            // }}
+            >
             <Text style={styles.listItemText}>{item.Code}</Text>
           </TouchableOpacity>
         )}
@@ -80,23 +81,25 @@ export default connect(mapStateToProps, mapDispatchToProps)(StockItems);
 const styles = StyleSheet.create({
   container: {
     padding: 0,
-    alignItems: 'center',
+    // alignItems: 'center',
   },
   list: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
+    // flexWrap: 'wrap',
+    // flexDirection: 'row',
     padding: 10,
+    width: '100%',
   },
   listItem: {
     color: 'black',
     borderStyle: 'solid',
     borderWidth: 1,
-    width: 140,
+    // width: 140,
     height: 100,
-    borderRadius: 10,
+    // borderRadius: 10,
     margin: 1,
-    backgroundColor: '#F1BF98',
+    backgroundColor: '#FFFFFF',
     elevation: 5,
+    flex: 1,
   },
   listItemText: {
     flex: 1,
@@ -113,7 +116,7 @@ const styles = StyleSheet.create({
   modalView: {
     margin: 20,
     backgroundColor: 'white',
-    borderRadius: 10,
+    // borderRadius: 10,
     padding: 35,
     alignItems: 'center',
     shadowColor: '#000',
@@ -129,7 +132,7 @@ const styles = StyleSheet.create({
   },
   openButton: {
     backgroundColor: '#2196F3',
-    borderRadius: 10,
+    // borderRadius: 10,
     padding: 10,
     elevation: 2,
     // alignSelf: 'flex-end'
@@ -138,12 +141,12 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
-    fontSize: 40
+    fontSize: 40,
   },
   modalText: {
     // marginBottom: 15,
     textAlign: 'center',
     fontSize: 30,
-    margin: 20
+    margin: 20,
   },
 });

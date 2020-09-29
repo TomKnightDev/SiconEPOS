@@ -20,7 +20,7 @@ function Basket(props) {
               props.removeFromBasket(item);
             }}>
             <Text style={styles.basketItem}>{item.Code}</Text>
-            <Text style={styles.basketItemPrice}>£{item.Price}</Text>
+            <Text style={styles.basketItemPrice}>£{Number(item.Price).toFixed(2)}</Text>
           </TouchableOpacity>
         )}
       />

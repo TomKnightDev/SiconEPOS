@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     borderWidth: 2,
-    margin: 10,
+    margin: 5,
   },
   payOptions: {
     flex: 1,
@@ -89,9 +89,9 @@ const styles = StyleSheet.create({
   },
   payOption: {
     borderWidth: 1,
-    margin: 10,
+    margin: 5,
     width: 'auto',
-    padding: 10,
+    padding: 5,
   },
   payOptionText: {
     fontSize: 30,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   enter: {
     height: 50,
     borderWidth: 1,
-    margin: 10,
+    margin: 5,
     padding: 10,
     justifyContent: 'center',
   },
