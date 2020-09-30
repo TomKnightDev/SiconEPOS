@@ -2,6 +2,7 @@ import React, {Component, useState} from 'react';
 import {
   Text,
   View,
+  Alert,
   StyleSheet,
   TouchableOpacity,
   Modal,
@@ -28,6 +29,50 @@ class MenuBar extends Component {
   setModalVisible = (visible) => {
     this.setState({modalVisible: visible});
   };
+
+   trySelectCustomer = (cust) => {
+
+    let successAction = () => {
+      this.props.customerSelected(cust.Id);
+      this.setModalVisible(false);
+    };
+
+      if (!!cust.AccountIsOnHold) {
+        let msgText = "Cash Payment required\n\n";
+
+        if (!!cust.PopupNotes) {
+          msgText += cust.PopupNotes;
+        }
+
+        Alert.alert(
+          "Account Is On Hold!",
+          msgText,
+          [
+            {
+              text: "Cancel",
+              onPress: () => this.setModalVisible(false),
+              style: "cancel"
+            },
+            { text: "Select Account", onPress: successAction }
+          ],
+          { cancelable: false }
+        );
+      }
+      else if (!!cust.PopupNotes) {
+        Alert.alert(
+          "Customer Notes",
+          cust.PopupNotes,
+          [
+            { text: "OK", onPress: successAction }
+          ],
+          { cancelable: false }
+        );
+      }
+      else {
+        successAction();    
+    }
+  }
+
 
   render() {
     const {modalVisible} = this.state;
@@ -58,13 +103,10 @@ class MenuBar extends Component {
                 }
                 keyExtractor={(item) => item.Id}
                 renderItem={({item}) => (
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.props.customerSelected(item.Id);
-                      this.setModalVisible(false);
-                    }}>
-                    <Text style={styles.modalText}>
-                      {item.Name} - {(!!item.AccountIsOnHold).toString()}
+                  <TouchableOpacity           
+                  onPress={() => { this.trySelectCustomer(item) }}>
+                    <Text style={[styles.modalText, !!item.AccountIsOnHold ? { color : 'red' } : {}]}>
+                      {item.Name}
                     </Text>
                   </TouchableOpacity>
                 )}></FlatList>
