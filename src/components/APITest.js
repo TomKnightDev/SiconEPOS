@@ -19,7 +19,7 @@ export default function APITest(props) {
 
   useEffect(() => {
     fetch(
-      'http://192.168.1.196/Sicon.Sage200.WebAPI/api/Stock/GetProductGroups',
+      `${getState().settingsReducer.settings.webapiaddress}Stock/GetProductGroups`,
     )
       .then((response) => response.json())
       .then((json) => {

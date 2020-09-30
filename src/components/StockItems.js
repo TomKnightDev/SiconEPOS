@@ -43,7 +43,7 @@ function StockItems(props) {
             <Image
               style={{margin: 10}}
               source={{
-                uri: `http://192.168.122.66/Sicon.Sage200.WebAPI/api/StockItemImagesFile/GetDefaultImageAsImage?itemCode=${selectedItem.Code}`,
+                uri: `${props.webapiaddress}StockItemImagesFile/GetDefaultImageAsImage?itemCode=${selectedItem.Code}`,
                 width: 300,
                 height: 300,
               }}
@@ -85,6 +85,7 @@ function StockItems(props) {
 const mapStateToProps = (state) => {
   return {
     selectedProductGroup: state.productGroupReducer.selectedProductGroup,
+    webapiaddress: state.settingsReducer.settings.webapiaddress,
   };
 };
 
