@@ -16,8 +16,7 @@ export const addToBasket = (stockItem) => {
     console.log(customerRef);
     axios
       .get(
-        // 'http://10.0.0.91/Sicon.Sage200.WebAPI/api/PriceBook/GetSellingPriceForCustomerStockItem',
-        'http://192.168.122.66/Sicon.Sage200.WebAPI/api/PriceBook/GetSellingPriceForCustomerStockItem',
+        `${getState().settingsReducer.settings.webapiaddress}PriceBook/GetSellingPriceForCustomerStockItem`,
         {
           params: {
             CustomerReference: customerRef,

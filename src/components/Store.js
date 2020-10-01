@@ -4,7 +4,7 @@ import ProductGroups from './ProductGroups';
 import Basket from './Basket';
 import BasketActions from './BasketActions';
 import StockItems from './StockItems';
-import barcodeService from '../services/barcodeservice';
+import barcodeService from '../services/barcodeService';
 import {connect} from 'react-redux';
 import {addToBasketViaBarcode} from '../actions/stockItem';
 import {TouchableOpacity} from 'react-native-gesture-handler';

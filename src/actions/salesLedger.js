@@ -5,8 +5,7 @@ export const getCustomerAccounts = () => {
   return (dispatch, getState) => {
     axios
       .get(
-        // 'http://10.0.0.91/Sicon.Sage200.WebAPI/api/Customer/GetCustomers'
-        'http://192.168.122.66/Sicon.Sage200.WebAPI/api/Customer/GetCustomers'
+        `${getState().settingsReducer.settings.webapiaddress}Customer/GetCustomers`
         )
       .then(function (response) {
         dispatch({type: GET_CUSTOMER_ACCOUNTS, payload: response.data});

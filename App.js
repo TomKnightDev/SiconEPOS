@@ -7,7 +7,7 @@ import Pay from './src/components/Pay';
 import {Provider} from 'react-redux';
 import configureStore from './src/store';
 import KeyEvent from 'react-native-keyevent';
-import barcodeService from './src/services/barcodeservice';
+import barcodeService from './src/services/barcodeService';
 import Settings from './src/components/Settings';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Button, Modal, View, StyleSheet, Text, LogoTitle} from 'react-native';
