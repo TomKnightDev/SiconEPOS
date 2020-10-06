@@ -19,13 +19,20 @@ class Pay extends Component {
   }
 
   printReceipt = () => {
+    var total = 0.0;
+    var line = '<C>Sicon Shop\n\n</C>';
+    this.printService.printText(' ');
     this.props.basketItems.forEach((item) => {
       //Work out the padding
-      var line = `<C>${item.Code}: ${item.Price}</C>\n`;
-      this.printService.printText(line);
+      total += Number(item.Price);
+      line += `<C>${item.Code}: ${item.Price}</C>\n`;
     });
 
-    this.printService.printAndCut('<C>Thank you for using Sicon EPOS</C>');
+    line += `\n<C>Total: ${total}</C>\n\n`;
+
+    this.printService.printText(line);
+
+    this.printService.printAndCut('<C>Thank you for using Sicon EPOS</C>\n');
     this.printService.openCashDrawer();
   };
 
