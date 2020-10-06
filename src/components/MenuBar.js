@@ -16,6 +16,11 @@ class MenuBar extends Component {
   constructor(props) {
     super(props);
     this.props.getCustomerAccounts((data) => {
+
+      data.sort((a,b) => {
+        return a.Name > b.Name;
+      });
+
       this.setState({ filteredCustomers: data });
     });
   }
