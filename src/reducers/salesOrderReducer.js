@@ -37,8 +37,8 @@ const salesOrderReducer = (state = initialState, action) => {
 
       axios
         .post(
-          // 'http://192.168.122.66/Sicon.Sage200.WebAPI/api/SOPTest/CreateSalesOrder',
-          'http://10.0.0.91/Sicon.Sage200.WebAPI/api/SOPTest/CreateSalesOrder',
+                    // 'http://192.168.122.66/Sicon.Sage200.WebAPI/api/SOPTest/CreateSalesOrder',
+          'https://events1.sicon.co.uk/Sicon.Sage200.WebAPI/api/SOPTest/CreateSalesOrder',
           // 'http://192.168.1.238/Sicon.Sage200.WebAPI/api/SOPTest/CreateSalesOrder',
 
           salesOrder,

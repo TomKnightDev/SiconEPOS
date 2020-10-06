@@ -13,13 +13,11 @@ class Settings extends Component {
     super(props);
     this.state = {
       deviceList: [],
-      localwebapiaddress: '',
+      localwebapiaddress: this.props.webapiaddress,
     };
 
     this.printService = new PrintService();
     this.printService.connectPrinter(1);
-
-    this.props.storeSettings();
   }
 
   componentDidMount = async () => {
@@ -63,10 +61,12 @@ class Settings extends Component {
                 this.state.localwebapiaddress,
               );
             }}>
-            <Text style={styles.loginButtonText}>Test connection</Text>
+            <Text style={styles.loginButtonText}>Save</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.section}>
+        <Text
+        style={{fontSize: 15, textAlign: 'center'}}>Format (must be lowercase h): http://192.168.1.2/Sicon.Sage200.WebAPI/api/</Text>
+        <View style={{...styles.section, paddingTop: 50}}>
           <Text style={styles.text}>Select warehouse: </Text>
           <Picker
             selectedValue={this.props.settings.warehouse}
@@ -116,7 +116,6 @@ class Settings extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.settingsReducer.settings);
   return {
     settings: state.settingsReducer.settings,
   };

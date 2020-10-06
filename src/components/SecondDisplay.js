@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {View, Text, FlatList, StyleSheet, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 
@@ -20,6 +20,10 @@ const SecondDisplay = (props) => {
       fallbackInMainScreen
       screen={Object.keys(screens)[0]}>
       <View style={styles.basket}>
+        <Image
+          style={{padding: 10, alignSelf: 'center'}}
+          source={require('../images/siconlogo.png')}
+        />
         <Text style={styles.title}>Cashier in training...</Text>
         <FlatList
           inverted={true}
@@ -76,7 +80,7 @@ const styles = StyleSheet.create({
   },
   basketItem: {
     flex: 2,
-    fontSize: 50,
+    fontSize: 40,
     padding: 0,
     color: 'black',
     borderRadius: 2,
@@ -86,7 +90,7 @@ const styles = StyleSheet.create({
   },
   basketItemPrice: {
     flex: 1,
-    fontSize: 50,
+    fontSize: 40,
     padding: 0,
     color: 'black',
     borderRadius: 2,
@@ -102,13 +106,13 @@ const styles = StyleSheet.create({
   },
   total: {
     flex: 1,
-    fontSize: 60,
+    fontSize: 50,
     // padding: 5,
     color: 'black',
   },
   totalValue: {
     flex: 1,
-    fontSize: 60,
+    fontSize: 50,
     // padding: 5,
     color: 'black',
     textAlign: 'right',

@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import {
   FlatList,
   TextInput,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
+import {connect} from 'react-redux';
+import {storeSettings} from '../actions/settings';
 
 class Login extends Component {
   constructor(props) {
@@ -61,13 +63,18 @@ class Login extends Component {
         },
       ],
     };
+
+    this.props.storeSettings();
   }
 
   render() {
     return (
       <View>
+        <Image
+          style={{marginTop: 20, padding: 10, alignSelf: 'center'}}
+          source={require('../images/siconlogo.png')}
+        />
         <Text style={styles.title}>Welcome to Sicon EPOS</Text>
-
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <FlatList
             style={styles.list}
@@ -96,7 +103,19 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    settings: state.settingsReducer.settings,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    storeSettings: () => dispatch(storeSettings()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 const styles = StyleSheet.create({
   title: {

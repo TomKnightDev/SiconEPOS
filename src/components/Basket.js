@@ -16,7 +16,7 @@ function Basket(props) {
         renderItem={({item}) => (
           <TouchableOpacity
             style={{flexDirection: 'row'}}
-            delayLongPress={1500}
+            // delayLongPress={1500}
             onLongPress={() => {
               props.removeFromBasket(item);
             }}>

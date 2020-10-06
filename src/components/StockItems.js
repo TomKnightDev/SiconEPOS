@@ -69,7 +69,7 @@ function StockItems(props) {
             onPress={() => {
               props.addToBasket(item);
             }}
-            delayLongPress={1500}
+            // delayLongPress={1500}
             onLongPress={() => {
               setSelectedItem(item);
               setModalVisible(!modalVisible);
