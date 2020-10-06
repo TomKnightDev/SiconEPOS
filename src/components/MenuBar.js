@@ -15,15 +15,39 @@ import {FlatList} from 'react-native-gesture-handler';
 class MenuBar extends Component {
   constructor(props) {
     super(props);
+    this.props.getCustomerAccounts((data) => {
+      this.setState({ filteredCustomers: data });
+    });
   }
 
   state = {
     modalVisible: false,
-    filter: '',
+    filter : '',
+    filteredCustomers : []
   };
 
-  componentDidMount() {
-    this.props.getCustomerAccounts();
+  filterList = (e) => {
+    const updatedList = this.props.customerAccounts.filter(item => {
+      return (
+        item.Name.toLowerCase().search(e.toLowerCase()) !== -1
+      );
+    });
+    this.setState({ filteredCustomers: updatedList });
+    this.setState({ filter: e });
+  };
+
+  openCustomerSelection = () => {
+    this.setModalVisible(true);
+  }
+
+  closeCustomerSelection = (cust) => {
+    this.filterList("");
+
+    if (cust != undefined) {
+      this.props.customerSelected(cust.Id);
+    }
+
+    this.setModalVisible(false);
   }
 
   setModalVisible = (visible) => {
@@ -31,11 +55,6 @@ class MenuBar extends Component {
   };
 
    trySelectCustomer = (cust) => {
-
-    let successAction = () => {
-      this.props.customerSelected(cust.Id);
-      this.setModalVisible(false);
-    };
 
       if (!!cust.AccountIsOnHold) {
         let msgText = "Cash Payment required\n\n";
@@ -50,10 +69,10 @@ class MenuBar extends Component {
           [
             {
               text: "Cancel",
-              onPress: () => this.setModalVisible(false),
+              onPress: () => this.closeCustomerSelection(),
               style: "cancel"
             },
-            { text: "Select Account", onPress: successAction }
+            { text: "Select Account", onPress: () => { this.closeCustomerSelection(cust) } }
           ],
           { cancelable: false }
         );
@@ -63,13 +82,13 @@ class MenuBar extends Component {
           "Customer Notes",
           cust.PopupNotes,
           [
-            { text: "OK", onPress: successAction }
+            { text: "OK", onPress: () => { this.closeCustomerSelection(cust) } }
           ],
           { cancelable: false }
         );
       }
       else {
-        successAction();    
+        this.closeCustomerSelection(cust);  
     }
   }
 
@@ -92,14 +111,11 @@ class MenuBar extends Component {
                 <Text style={styles.modalText}>Search:</Text>
                 <TextInput
                   style={styles.textInput}
-                  onTextInput={(text) =>
-                    this.setState({filter: {text}})
-                  }></TextInput>
+                  onChangeText={(text) => this.filterList(text)}>{this.state.filter}</TextInput>
               </View>
               <FlatList
                 data={
-                  this.props.customerAccounts
-                  // .filter((ac) =>                  ac.Name.includes(this.props.filter),                )
+                  this.state.filteredCustomers
                 }
                 keyExtractor={(item) => item.Id}
                 renderItem={({item}) => (
@@ -113,7 +129,7 @@ class MenuBar extends Component {
               <TouchableOpacity
                 style={styles.openButton}
                 onPress={() => {
-                  this.setModalVisible(false);
+                  this.closeCustomerSelection()
                 }}>
                 <Text style={{fontSize: 20, color: 'white'}}>Close</Text>
               </TouchableOpacity>
@@ -125,7 +141,7 @@ class MenuBar extends Component {
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                this.setModalVisible(!modalVisible);
+                this.openCustomerSelection();
               }}>
               <Text style={styles.buttonText}>Account</Text>
             </TouchableOpacity>
@@ -153,7 +169,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     customerSelected: (customerAccount) =>
       dispatch(customerSelected(customerAccount)),
-    getCustomerAccounts: () => dispatch(getCustomerAccounts()),
+    getCustomerAccounts: (success) => dispatch(getCustomerAccounts(success)),
   };
 };
 

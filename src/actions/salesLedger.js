@@ -1,7 +1,7 @@
 import {GET_CUSTOMER_ACCOUNTS, CUSTOMER_SELECTED} from './types';
 import axios from 'axios';
 
-export const getCustomerAccounts = () => {
+export const getCustomerAccounts = (finishedAction) => {
   return (dispatch, getState) => {
     axios
       .get(
@@ -9,8 +9,16 @@ export const getCustomerAccounts = () => {
         )
       .then(function (response) {
         dispatch({type: GET_CUSTOMER_ACCOUNTS, payload: response.data});
+        
+        if (finishedAction != undefined) {
+          finishedAction(response.data);
+        }
       });
   };
+};
+
+export const customerAccountsRetreived = () => {
+  
 };
 
 export const customerSelected = (customer) => {
