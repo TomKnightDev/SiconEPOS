@@ -13,7 +13,7 @@ class Settings extends Component {
     super(props);
     this.state = {
       deviceList: [],
-      localwebapiaddress: this.props.webapiaddress,
+      localwebapiaddress: this.props.settings.webapiaddress,
     };
 
     this.printService = new PrintService();
@@ -25,6 +25,7 @@ class Settings extends Component {
       Object.assign({}, this.state, {
         printedSelected: printedSelected,
         deviceList: devices,
+        localwebapiaddress: this.props.settings.webapiaddress,
       }),
     );
   };
@@ -55,7 +56,7 @@ class Settings extends Component {
           </TextInput>
           <TouchableOpacity
             style={{...styles.loginButton}}
-            onPress={() => {
+            onPress={(text) => {
               this.props.setSetting(
                 'webapiaddress',
                 this.state.localwebapiaddress,

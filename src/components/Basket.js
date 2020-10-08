@@ -20,7 +20,7 @@ function Basket(props) {
             onLongPress={() => {
               props.removeFromBasket(item);
             }}>
-            <Text style={styles.basketItem}>{item.Code}</Text>
+            <Text style={styles.basketItem}>{item.Quantity}x {item.Code}</Text>
             <Text style={styles.basketItemPrice}>£{Number(item.Price).toFixed(2)}</Text>
           </TouchableOpacity>
         )}
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   },
   basketItemPrice: {
     flex: 1,
-    fontSize: 20,
+    fontSize: 18,
     padding: 0,
     color: 'black',
     borderRadius: 2,
