@@ -3,8 +3,8 @@ import {STORE_SETTINGS, SET_SETTING} from '../actions/types';
 
 const initialState = {
   settings: {
-    webapiaddress: 'test',
-    warehouse: 'test'
+    webapiaddress: 'https://events1.sicon.co.uk/Sicon.Sage200.WebAPI/api/',
+    warehouse: 'WAREHOUSE'
   },
 };
 

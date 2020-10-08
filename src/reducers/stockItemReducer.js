@@ -5,13 +5,15 @@ import {
   CLEAR_BASKET,
   UPDATE_BASKET_ITEM_PRICE,
   GET_STOCK_ITEM_IMAGE,
+  GET_PRODUCT_GROUPS,
 } from '../actions/types';
 
 const initialState = {
   basketItems: [],
   basketItemID: 0,
   basketTotal: 0.0,
-  stockItemImage: {}
+  stockItemImage: {},
+  stockItems: [],
 };
 
 const stockItemReducer = (state = initialState, action) => {
@@ -21,11 +23,27 @@ const stockItemReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_BASKET:
       newBasketItems = state.basketItems.slice();
-      newBasketItems.unshift({
-        ID: state.baskItemID,
-        Code: action.stockItem.Code,
-        Price: action.stockItem.Price,
+
+      //Check if item exists in basket
+      let exists = false;
+
+      newBasketItems.forEach((item) => {
+        if (item.Code == action.stockItem.Code) {
+          exists = true;
+          item.Quantity += 1;
+          item.Price = parseFloat(action.stockItem.Price * item.Quantity);
+        }
       });
+
+      if (exists == false) {
+        newBasketItems.unshift({
+          ID: state.baskItemID,
+          Code: action.stockItem.Code,
+          Price: action.stockItem.Price,
+          Quantity: 1,
+        });
+      }
+
       newTotal = state.basketTotal + parseFloat(action.stockItem.Price);
       let newBasketItemID = state.baskItemID + 1;
       return {
@@ -50,7 +68,7 @@ const stockItemReducer = (state = initialState, action) => {
 
       for (let i = 0; i < newBasketItems.length; i++) {
         if (newBasketItems[i].Code == action.code) {
-          newBasketItems[i].Price = Number(action.payload);
+          newBasketItems[i].Price = Number(action.payload * newBasketItems[i].Quantity);
         }
         newTotal += newBasketItems[i].Price;
       }
@@ -62,6 +80,12 @@ const stockItemReducer = (state = initialState, action) => {
       };
     case GET_STOCK_ITEM_IMAGE:
       return state;
+    case GET_PRODUCT_GROUPS:
+      //action.payload is productGroups
+      console.log(action.payload);
+      var items = action.payload.flatMap((a) => a.Items);
+      console.log(items);
+      return {...state, stockItems: items};
     default:
       return state;
   }

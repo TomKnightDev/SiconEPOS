@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -9,6 +9,7 @@ import {
   Alert,
   Modal,
   Image,
+  TextInput,
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import ListItem from './ListItem';
@@ -19,73 +20,159 @@ import {addToBasket} from '../actions/stockItem';
 import {ScrollView} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-function StockItems(props) {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedItem, setSelectedItem] = useState({});
+class StockItems extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-  return (
-    <View style={styles.container}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {}}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>
-              {selectedItem.Name} £{selectedItem.Price}
-            </Text>
-            <SafeAreaView style={{height: 100}}>
-              <ScrollView>
-                <Text style={{fontSize: 15}}>{selectedItem.Description}</Text>
-              </ScrollView>
-            </SafeAreaView>
-            <Image
-              style={{margin: 10}}
-              source={{
-                uri: `${props.webapiaddress}StockItemImagesFile/GetDefaultImageAsImage?itemCode=${selectedItem.Code}`,
-                width: 300,
-                height: 300,
-              }}
-            />
-            <TouchableOpacity
-              style={styles.openButton}
-              onPress={() => {
-                setModalVisible(false);
-              }}>
-              <Text style={{fontSize: 20, color: 'white'}}>Close</Text>
-            </TouchableOpacity>
-          </View>
+  state = {
+    modalVisible: false,
+    searchModalVisible: false,
+    selectedItem: {},
+    filter: '',
+    filteredStockItems: [],
+  };
+
+  componentDidMount() {
+    this.setState({filteredStockItems: this.props.stockItems});
+  }
+
+  filterList = (e) => {
+    const updatedList = this.props.stockItems.filter((item) => {
+      return item.Name.toLowerCase().search(e.toLowerCase()) !== -1;
+    });
+    this.setState({filteredStockItems: updatedList});
+    this.setState({filter: e});
+  };
+
+  render() {
+    return (
+      <>
+        <View style={styles.container}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {}}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>
+                  {this.state.selectedItem.Name} £
+                  {this.state.selectedItem.Price}
+                </Text>
+                <SafeAreaView style={{height: 100}}>
+                  <ScrollView>
+                    <Text style={{fontSize: 15}}>
+                      {this.state.selectedItem.Description}
+                    </Text>
+                  </ScrollView>
+                </SafeAreaView>
+                <Image
+                  style={{margin: 10}}
+                  source={{
+                    uri: `${this.props.webapiaddress}StockItemImagesFile/GetDefaultImageAsImage?itemCode=${this.state.selectedItem.Code}`,
+                    width: 300,
+                    height: 300,
+                  }}
+                />
+                <TouchableOpacity
+                  style={styles.openButton}
+                  onPress={() => {
+                    this.setState({modalVisible: false});
+                  }}>
+                  <Text style={{fontSize: 20, color: 'white'}}>Close</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={this.state.searchModalVisible}
+            on
+            onRequestClose={() => {}}>
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                {/* <Text style={styles.modalText}>
+                {this.props.selectedAccount.Name}
+              </Text> */}
+                <View style={{flexDirection: 'row'}}>
+                  <Text style={styles.modalText}>Search:</Text>
+                  <TextInput
+                    style={styles.textInput}
+                    onChangeText={(text) => this.filterList(text)}>
+                    {this.state.filter}
+                  </TextInput>
+                </View>
+                <FlatList
+                  data={this.state.filteredStockItems}
+                  keyExtractor={(item) => item.ItemID}
+                  renderItem={({item}) => (
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.props.addToBasket(item);
+                        this.setState({searchModalVisible: false});
+                      }}>
+                      <Text style={styles.modalText}>{item.Name}</Text>
+                    </TouchableOpacity>
+                  )}></FlatList>
+                <TouchableOpacity
+                  style={styles.openButton}
+                  onPress={() => {
+                    this.setState({searchModalVisible: false});
+                  }}>
+                  <Text style={{fontSize: 20, color: 'white'}}>Close</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+          <FlatList
+            style={styles.list}
+            numColumns={4}
+            data={this.props.selectedProductGroup.Items}
+            keyExtractor={(item) => item.ItemID}
+            renderItem={({item}) => (
+              <TouchableOpacity
+                style={styles.listItem}
+                onPress={() => {
+                  this.props.addToBasket(item);
+                }}
+                // delayLongPress={1500}
+                onLongPress={() => {
+                  this.setState({selectedItem: item});
+                  this.setState({modalVisible: true});
+                }}>
+                <Text style={styles.listItemText}>{item.Name}</Text>
+              </TouchableOpacity>
+            )}
+          />
         </View>
-      </Modal>
-      <FlatList
-        style={styles.list}
-        numColumns={4}
-        data={props.selectedProductGroup.Items}
-        keyExtractor={(item) => item.ItemID}
-        renderItem={({item}) => (
+        <View style={{position: 'absolute', bottom: 0, alignSelf: 'center'}}>
           <TouchableOpacity
-            style={styles.listItem}
-            onPress={() => {
-              props.addToBasket(item);
+            style={{
+              ...styles.listItem,
+              flex: 0,
+              margin: 10,
+              width: 150,
+              height: 60,
+              alignSelf: 'center',
             }}
-            // delayLongPress={1500}
-            onLongPress={() => {
-              setSelectedItem(item);
-              setModalVisible(!modalVisible);
+            onPress={() => {
+              this.setState({searchModalVisible: true});
             }}>
-            <Text style={styles.listItemText}>{item.Name}</Text>
+            <Text style={{...styles.listItemText,fontSize: 30}}>Search</Text>
           </TouchableOpacity>
-        )}
-      />
-    </View>
-  );
+        </View>
+      </>
+    );
+  }
 }
 
 const mapStateToProps = (state) => {
   return {
     selectedProductGroup: state.productGroupReducer.selectedProductGroup,
     webapiaddress: state.settingsReducer.settings.webapiaddress,
+    stockItems: state.stockItemReducer.stockItems,
   };
 };
 
@@ -166,6 +253,25 @@ const styles = StyleSheet.create({
     // marginBottom: 15,
     textAlign: 'center',
     fontSize: 30,
-    margin: 10,
+    margin: 20,
+  },
+  searchButton: {
+    backgroundColor: '#2196F3',
+    // borderRadius: 10,
+    padding: 5,
+    paddingHorizontal: 10,
+    elevation: 5,
+    // alignSelf: 'flex-end'
+  },
+  searchButtonText: {
+    fontSize: 25,
+    color: 'white',
+  },
+  textInput: {
+    borderWidth: 1,
+    width: '70%',
+    fontSize: 20,
+    height: 50,
+    alignSelf: 'center',
   },
 });

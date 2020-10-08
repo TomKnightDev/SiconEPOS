@@ -16,6 +16,7 @@
     "@react-navigation/stack": "^5.9.0",
     "@reduxjs/toolkit": "^1.4.0",
     "axios": "^0.20.0",
+    "jetifier": "^1.6.6",
     "react": "16.13.1",
     "react-native": "0.63.2",
     "react-native-external-display": "^0.5.4",
