@@ -1,4 +1,4 @@
 # SiconEPOS
 
-![Login](https://github.com/Bolto720/SiconEPOS/tree/master/Images/SiconEPOSLogin.png?raw=true "Login")
-![Store](https://github.com/Bolto720/SiconEPOS/tree/master/Images/SiconEPOS1.png)
+![Login](Images/SiconEPOSLogin.png)
+![Store](Images/SiconEPOS1.png)
