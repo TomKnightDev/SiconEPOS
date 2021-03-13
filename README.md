@@ -1,4 +1,4 @@
 # SiconEPOS
 
-![alt text](https://github.com/Bolto720/SiconEPOS/Images/SiconEPOSLogin.png)
-![alt text](https://github.com/Bolto720/SiconEPOS/Images/SiconEPOS1.png)
+![Login](Images/SiconEPOSLogin.png)
+![Store](Images/SiconEPOS1.png)
