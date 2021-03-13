@@ -106,7 +106,7 @@ export class CashOptions extends Component {
           <View style={{...styles.taken, flexDirection: 'row'}}>
             <Text style={styles.buttonText}>Change due: </Text>
             <Text style={{...styles.buttonText, marginLeft: 'auto'}}>
-              £{this.state.basketTotal - this.state.taken}
+              £{Math.max(0, this.state.taken - this.props.basketTotal)}
             </Text>
           </View>
         </View>
