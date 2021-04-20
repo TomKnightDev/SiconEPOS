@@ -1,6 +1,6 @@
 # SiconEPOS
 
-The start of an EPOS system, created in React Native, for the Sicon annual conference as a prototype to gauge interest and gather feedback from Sage business partners.  I created this with some input from a colleague over a few weeks in evenings and on weekends.
+The start of an EPOS system, created in React Native for the Sicon annual conference as a prototype to gauge interest and gather feedback from Sage business partners.  I created this with some input from a colleague over a few weeks in evenings and on weekends.
 
 The backend is the Sicon web api which connects to Sage 200.  I added extra methods to the web api where needed.
 
